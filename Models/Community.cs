@@ -1,4 +1,6 @@
-﻿namespace Reddit.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Reddit.Models
 {
     public class Community
     {
