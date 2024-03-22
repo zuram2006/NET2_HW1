@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Reddit.Models
 {
@@ -6,7 +7,9 @@ namespace Reddit.Models
     {
         [Key]
         public int ID { get; set; }
-        public User Owner { get; set; } = new User();
+        public int? OwnerID { get; set; }
+        [ForeignKey(nameof(OwnerID))]
+        public virtual User? Owner { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
