@@ -105,5 +105,23 @@ namespace Reddit.Controllers
         {
             return _context.Posts.Any(e => e.Id == id);
         }
+        [HttpPost("{id}")]
+        public async Task<ActionResult<Post>> PostPostWithCommunity(CreatePostDto createPostDto,int communityID)
+        {
+            var post = _mapper.toPost(createPostDto);
+            
+            var community = await _context.Communities.FindAsync(communityID);
+            if (community == null)
+            {
+                return BadRequest();
+            }
+
+            post.Community = community;
+
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPost", new { id = post.Id }, post);
+        }
     }
 }

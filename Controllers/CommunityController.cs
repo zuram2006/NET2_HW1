@@ -63,6 +63,28 @@ namespace Reddit.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCommunity (int id, Community community)
+        {
+            if (id == community.ID)
+            {
+                return BadRequest();
+            }
+
+            var communtyToModify = await _context.Communities.FindAsync(id);
+
+            if(communtyToModify == null)
+            {
+                return NotFound();
+            }
+
+            communtyToModify.Name = community.Name;
+            communtyToModify.Owner = community.Owner;
+            communtyToModify.Description = community.Description;
+            communtyToModify.Subscribers = community.Subscribers;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
     }
 }
