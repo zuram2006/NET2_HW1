@@ -6,9 +6,9 @@ namespace Reddit.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
-        public virtual ICollection<Community> subscribedCommunities { get; set; }
+        public virtual ICollection<Community> subscribedCommunities { get; set; } = new List<Community>();
 
     }
 }

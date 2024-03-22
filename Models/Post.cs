@@ -18,7 +18,7 @@ namespace Reddit.Models
         public int  Downvotes{ get; set; }
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-        public virtual Community Community { get; set; }
+        public virtual Community? Community { get; set; }
 
     }
 }

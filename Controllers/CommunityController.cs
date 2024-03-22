@@ -14,6 +14,11 @@ namespace Reddit.Controllers
     {
         private readonly ApplcationDBContext _context;
 
+        CommunityController(ApplcationDBContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Community>>> GetCommunities()
         {
