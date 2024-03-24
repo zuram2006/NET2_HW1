@@ -13,10 +13,12 @@ namespace Reddit.Controllers
     public class CommunityController : ControllerBase
     {
         private readonly ApplcationDBContext _context;
+        private readonly IMapper _mapper;
 
-        CommunityController(ApplcationDBContext context)
+        public CommunityController(ApplcationDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -41,12 +43,7 @@ namespace Reddit.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCommunity(CreateCommunityDto communityDto)
         {
-            var community = new Community()
-            {
-                Name = communityDto.Name,
-                ID = communityDto.ID,
-                Owner = communityDto.Owner
-            };
+            var community = _mapper.toCommunity(communityDto);
 
             await _context.Communities.AddAsync(community);
             await _context.SaveChangesAsync();

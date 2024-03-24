@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
 
 namespace Reddit.Models
 {
@@ -18,6 +19,7 @@ namespace Reddit.Models
         public int  Downvotes{ get; set; }
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+        
         public virtual Community? Community { get; set; }
 
     }
