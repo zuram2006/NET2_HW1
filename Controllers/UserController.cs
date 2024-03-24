@@ -52,7 +52,7 @@ namespace Reddit.Controllers
                 return NotFound();
             }
 
-            user.subscribedCommunities.Add(community);
+            user.SubscribedCommunities.Add(community);
             await _context.SaveChangesAsync();
             return Ok();
         }

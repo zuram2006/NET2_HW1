@@ -43,11 +43,11 @@ namespace Reddit.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCommunity(CreateCommunityDto communityDto)
         {
-            var community = _mapper.toCommunity(communityDto);
+                var community = _mapper.toCommunity(communityDto);
 
-            await _context.Communities.AddAsync(community);
-            await _context.SaveChangesAsync();
-            return Ok();
+                await _context.Communities.AddAsync(community);
+                await _context.SaveChangesAsync();
+                return Ok();
         }
 
         [HttpDelete("{id}")]
@@ -68,7 +68,7 @@ namespace Reddit.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCommunity (int id, Community community)
         {
-            if (id == community.ID)
+            if (id == community.Id)
             {
                 return BadRequest();
             }

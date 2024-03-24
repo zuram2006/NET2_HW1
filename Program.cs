@@ -19,7 +19,8 @@ builder.Services.AddDbContext<ApplcationDBContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb"));
     options.UseLazyLoadingProxies();
     options.LogTo(Console.WriteLine, LogLevel.Information);
-    });
+    options.EnableSensitiveDataLogging();
+});
 
 builder.Services.AddCors(options =>
 {
