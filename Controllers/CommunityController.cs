@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Reddit.Dtos;
 using Reddit.Mapper;
@@ -12,10 +11,10 @@ namespace Reddit.Controllers
     [ApiController]
     public class CommunityController : ControllerBase
     {
-        private readonly ApplcationDBContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public CommunityController(ApplcationDBContext context, IMapper mapper)
+        public CommunityController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -68,25 +67,17 @@ namespace Reddit.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCommunity (int id, Community community)
         {
-            if (id == community.Id)
-            {
-                return BadRequest();
-            }
-
-            var communtyToModify = await _context.Communities.FindAsync(id);
-
-            if(communtyToModify == null)
+            if (!CommunityExists(id))
             {
                 return NotFound();
             }
 
-            communtyToModify.Name = community.Name;
-            communtyToModify.Owner = community.Owner;
-            communtyToModify.Description = community.Description;
-            communtyToModify.Subscribers = community.Subscribers;
+            _context.Entry(community).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
             return Ok();
         }
 
+        private bool CommunityExists(int id) => _context.Communities.Any(e => e.Id == id);
     }
 }

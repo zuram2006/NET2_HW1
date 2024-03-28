@@ -11,10 +11,10 @@ namespace Reddit.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        private readonly ApplcationDBContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public PostsController(ApplcationDBContext context, IMapper mapper)
+        public PostsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -104,24 +104,6 @@ namespace Reddit.Controllers
         private bool PostExists(int id)
         {
             return _context.Posts.Any(e => e.Id == id);
-        }
-        [HttpPost("{id}")]
-        public async Task<ActionResult<Post>> PostPostWithCommunity(CreatePostDto createPostDto,int communityID)
-        {
-            var post = _mapper.toPost(createPostDto);
-            
-            var community = await _context.Communities.FindAsync(communityID);
-            if (community == null)
-            {
-                return BadRequest();
-            }
-
-            post.Community = community;
-
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPost", new { id = post.Id }, post);
         }
     }
 }
